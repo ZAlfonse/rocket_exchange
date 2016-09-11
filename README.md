@@ -14,6 +14,9 @@ Stop it with `ctrl+c`
 #### Run the migrations
 `docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env rocketexchange:latest migrate`
 
+#### Run collectstatic
+`docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env rocketexchange:latest collectstatic`
+
 #### Load the fixture data
 `docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env rocketexchange:latest loaddata fixtures/initial.json`
 
