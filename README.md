@@ -23,4 +23,4 @@ Stop it with `ctrl+c`
 #### Everything should work
 `docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env -p 8000:8000 rocketexchange:latest`
 
-Go to http://localhost:8000
+Go [here](http://localhost:8000)
