@@ -1,9 +1,12 @@
 # rocket_exchange
 
 You need:
-python 3+ 
-docker
+--
+- python3 
+- docker
 
+Steps:
+--
 #### Run `init_project.py`
 This generates an env file with your `SECRET_KEY` in a file called `env`
 
