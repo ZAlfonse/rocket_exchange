@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^ri/', include('rocketitems.urls'))
+    url(r'^ri/', include('rocketitems.urls')),
+    url(r'^rt/', include('rockettrade.urls'))
 ]
