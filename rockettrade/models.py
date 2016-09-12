@@ -1,7 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import UserManager, AbstractUser
+from django.conf import settings
 
 from rocketitems.models import Item
+
+
+class User(AbstractUser):
+    steam_id = models.BigIntegerField(null=True)
+    steam_persona = models.CharField(max_length=100, null=True)
+    steam_username = models.CharField(max_length=50, null=True)
+
+    objects = UserManager()
 
 
 class Listing(models.Model):
@@ -23,7 +32,8 @@ class Listing(models.Model):
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=9, decimal_places=4)
 
-    seller = models.ForeignKey(User)
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='listings')
+    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='purchases', null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)

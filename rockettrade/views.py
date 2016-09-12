@@ -1,7 +1,5 @@
-from .models import Listing
+from .models import Listing, User
 from .serializers import ListingSerializer, UserSerializer
-
-from django.contrib.auth.models import User
 
 from rest_framework import viewsets
 
