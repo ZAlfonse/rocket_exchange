@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'social.apps.django_app.default',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {

@@ -1,20 +1,30 @@
-from .models import Item, Rarity, Category
+from .models import Item, Quality, Type, Pack
 from rest_framework import serializers
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class TypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = ('id', 'name')
+        model = Type
+        fields = ('name',)
 
 
-class ItemSerializer(serializers.HyperlinkedModelSerializer):
+class QualitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quality
+        fields = ('name', 'sort')
+
+
+class PackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pack
+        fields = ('name', 'release_date')
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    quality = QualitySerializer()
+    type = TypeSerializer()
+    pack = PackSerializer()
+
     class Meta:
         model = Item
-        fields = ('id', 'name', 'rarity', 'category', 'platform_restrictions')
-
-
-class RaritySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Rarity
-        fields = ('id', 'name', 'rank')
+        fields = ('id', 'name', 'quality', 'type', 'pack', 'platform_restrictions')

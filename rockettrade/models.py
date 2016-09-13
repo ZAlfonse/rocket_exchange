@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import UserManager, AbstractUser
 from django.conf import settings
 
-from rocketitems.models import Item
-
 
 class User(AbstractUser):
     steam_id = models.BigIntegerField(null=True)
@@ -28,7 +26,6 @@ class Listing(models.Model):
 
     status = models.CharField(max_length=1, default=OPEN, choices=STATUS_CHOICES)
 
-    item = models.ForeignKey(Item)
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=9, decimal_places=4)
 

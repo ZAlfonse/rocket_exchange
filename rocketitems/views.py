@@ -1,15 +1,15 @@
-from .models import Item, Rarity, Category
-from .serializers import ItemSerializer, RaritySerializer, CategorySerializer
+from .models import Item, Quality, Type
+from .serializers import ItemSerializer, QualitySerializer, TypeSerializer
 
 from rest_framework import viewsets
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class TypeViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows categories to be viewed or edited
     """
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
 
 
 class ItemViewSet(viewsets.ModelViewSet):
@@ -20,9 +20,9 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
 
-class RarityViewSet(viewsets.ModelViewSet):
+class QualityViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows rarities to be viewed or edited
     """
-    queryset = Rarity.objects.all().order_by('rank')
-    serializer_class = RaritySerializer
+    queryset = Quality.objects.all().order_by('sort')
+    serializer_class = QualitySerializer

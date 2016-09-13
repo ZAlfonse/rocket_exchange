@@ -1,29 +1,58 @@
 from django.db import models
 
 
-class Rarity(models.Model):
+class Quality(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    rank = models.IntegerField(default=-1)
+    sort = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
 
-class Category(models.Model):
+class Type(models.Model):
     name = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
         return self.name
+
+
+class Pack(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    release_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Attribute(models.Model):
+    CERTIFIED = 'C'
+    PAINTED = 'P'
+    TYPE_CHOICES = (
+        (CERTIFIED, 'Certified'),
+        (PAINTED, 'Painted')
+    )
+    name = models.CharField(max_length=50)
+    type = models.CharField(choices=TYPE_CHOICES, max_length=1)
+
+    class Meta:
+        unique_together = ('name', 'type',)
+
+    def __str__(self):
+        return self.get_type_display() + ' - ' + self.name
 
 
 class Item(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    rarity = models.ForeignKey(Rarity)
-    category = models.ForeignKey(Category)
+    name = models.CharField(max_length=50)
+    quality = models.ForeignKey(Quality)
+    type = models.ForeignKey(Type)
+    pack = models.ForeignKey(Pack)
     # image = models.ImageField()
     pc_only = models.BooleanField(default=False)
     xbox_only = models.BooleanField(default=False)
     psn_only = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('name', 'type',)
 
     def platform_restrictions(self):
         restrictions = []
@@ -38,4 +67,19 @@ class Item(models.Model):
         return restrictions
 
     def __str__(self):
-        return self.name
+        return str(self.type) + ' - ' + self.name
+
+
+class Variation(models.Model):
+    item = models.ForeignKey(Item, related_name='variations')
+
+    def __str__(self):
+        return ', '.join([attr.attribute.name for attr in self.attributes.all()]) + ' ' + self.item.name
+
+
+class VariationAttribute(models.Model):
+    variation = models.ForeignKey(Variation, related_name='attributes')
+    attribute = models.ForeignKey(Attribute)
+
+    class Meta:
+        unique_together = ('variation', 'attribute',)
