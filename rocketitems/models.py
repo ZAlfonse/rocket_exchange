@@ -33,6 +33,7 @@ class Attribute(models.Model):
     )
     name = models.CharField(max_length=50)
     type = models.CharField(choices=TYPE_CHOICES, max_length=1)
+    description = models.CharField(default="An item modifier", max_length=50)
 
     class Meta:
         unique_together = ('name', 'type',)
