@@ -30,4 +30,5 @@ Stop it with `ctrl+c`
 #### Everything should work
 `docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env -p 8000:8000 rocketexchange:latest`
 
-Go [here](http://localhost:8000/rt)
+#### Try it
+`open index.html`
