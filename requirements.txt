@@ -1,3 +1,4 @@
 djangorestframework
 python-social-auth
 django-extensions
+pygraphviz

@@ -1,14 +1,25 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Listing, User
+
+from .models import Listing, ListingItem, User
+
+
+class ListingItemInline(admin.TabularInline):
+    model = ListingItem
 
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
+    list_display = ('seller', 'listing_item', 'value', 'created')
+    fields = ('status',)
+    inlines = [
+        ListingItemInline,
+    ]
 
-    list_display = ('seller', 'created', 'value')
-    fields = ('status', 'quantity', 'price', 'seller')
+    def save_model(self, request, obj, form, change):
+        obj.seller = request.user
+        obj.save()
 
 
 @admin.register(User)

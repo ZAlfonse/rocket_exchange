@@ -1,4 +1,4 @@
-from .models import Item, Quality, Type, Pack
+from .models import Item, Attribute, Quality, Type, Pack, Variation, VariationAttribute
 from rest_framework import serializers
 
 
@@ -28,3 +28,31 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'name', 'quality', 'type', 'pack', 'platform_restrictions')
+
+
+class AttributeSerializer(serializers.ModelSerializer):
+    type = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Attribute
+        fields = ('name', 'type')
+
+    def get_type(self, obj):
+        return obj.get_type_display()
+
+
+class VariationAttributeSerializer(serializers.ModelSerializer):
+    attribute = AttributeSerializer()
+
+    class Meta:
+        model = VariationAttribute
+        fields = ('id', 'attribute')
+
+
+class VariationSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+    attributes = VariationAttributeSerializer(many=True)
+
+    class Meta:
+        model = Variation
+        fields = ('id', 'item', 'attributes')
