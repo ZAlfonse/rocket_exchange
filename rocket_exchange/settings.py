@@ -101,7 +101,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Set the default redirect on steam login
-LOGIN_REDIRECT_URL = '/rt/user/'
+LOGIN_REDIRECT_URL = '/rt/user/1'
 
 # Personal steam API key
 SOCIAL_AUTH_STEAM_API_KEY = os.environ.get('STEAM_KEY', None)
