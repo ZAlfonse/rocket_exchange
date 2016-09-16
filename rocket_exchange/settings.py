@@ -100,6 +100,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+# Set the default redirect on steam login
+LOGIN_REDIRECT_URL = '/rt/user/'
+
 # Personal steam API key
 SOCIAL_AUTH_STEAM_API_KEY = os.environ.get('STEAM_KEY', None)
 SOCIAL_AUTH_STEAM_EXTRA_DATA = ['player']
