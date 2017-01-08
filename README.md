@@ -24,4 +24,4 @@ This generates an env file with your `SECRET_KEY` in a file called `env`
 `docker-compose run web createsuperuser`
 
 #### Try it
-http://localhost:8000/admin
+[Here](http://localhost:8000/admin)
