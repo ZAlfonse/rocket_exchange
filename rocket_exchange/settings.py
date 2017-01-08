@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'social.apps.django_app.default',
+    'social_django',
 ]
 
 REST_FRAMEWORK = {
@@ -71,8 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -99,7 +99,7 @@ AUTH_USER_MODEL = 'rockettrade.User'
 
 # Override the AUTHENTICAITON_BACKENDS to add openid providers
 AUTHENTICATION_BACKENDS = (
-    'social.backends.steam.SteamOpenId',
+    'social_core.backends.steam.SteamOpenId',
     'django.contrib.auth.backends.ModelBackend',
 )
 

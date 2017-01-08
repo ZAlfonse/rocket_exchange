@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from datetime import datetime
 
-from social.apps.django_app.default.models import UserSocialAuth
+from social_django.models import UserSocialAuth
 
 
 @receiver(pre_save, sender=UserSocialAuth, dispatch_uid="steam_pre_save_user_sync")
