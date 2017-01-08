@@ -4,6 +4,7 @@ You need:
 --
 - python3 
 - docker
+- docker-compose
 
 Steps:
 --
@@ -13,22 +14,14 @@ It will ask you for a steam api key which you can create [here](https://steamcom
 
 This generates an env file with your `SECRET_KEY` in a file called `env`
 
-#### Build the image
-`docker build -t rocketexchange .`
-
-#### Test the image
-`docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env -p 8000:8000 rocketexchange:latest`
-
-Stop it with `ctrl+c`
+#### Run compose
+`docker-compose up`
 
 #### Run the migrations
-`docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env rocketexchange:latest migrate`
+`docker-compose run web migrate`
 
 #### Make a superuser
-`docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env rocketexchange:latest createsuperuser`
-
-#### Everything should work
-`docker run -it -v "$(pwd)"/:/usr/src/app --rm --env-file env -p 8000:8000 rocketexchange:latest`
+`docker-compose run web createsuperuser`
 
 #### Try it
-`open index.html`
+http://localhost:8000/admin
