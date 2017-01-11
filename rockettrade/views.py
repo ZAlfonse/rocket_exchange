@@ -17,6 +17,11 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_object(self):
+        if self.kwargs.get('pk') == 'me':
+            return self.request.user
+
+        return super(UserViewSet, self).get_object()
 
 def debug(request):
     output = ""

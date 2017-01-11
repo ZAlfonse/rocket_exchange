@@ -2,7 +2,7 @@ version: '2'
 services:
   db:
     image: postgres
-  web:
+  api:
     build: .
     command: runserver 0.0.0.0:8000
     environment:
