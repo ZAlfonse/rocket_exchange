@@ -11,7 +11,7 @@ class ListingItemInline(admin.TabularInline):
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('seller', 'listing_item', 'value', 'created')
+    list_display = ('seller', 'value', 'created')
     fields = ('status',)
     inlines = [
         ListingItemInline,

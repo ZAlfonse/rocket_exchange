@@ -40,31 +40,21 @@ class Listing(models.Model):
 
     @property
     def value(self):
-        return self.item.value
-
-    def __str__(self):
-        return '{}\'s listing of {} {} @ {}'.format(
-            self.seller.username,
-            self.item.quantity,
-            self.item,
-            self.item.price
-        )
+        return self.listing_items.aggregate(models.Sum('value'))
 
 
 class ListingItem(models.Model):
-    listing = models.OneToOneField(Listing, related_name='listing_item')
+    listing = models.ForeignKey(Listing, related_name='listing_items')
 
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=9, decimal_places=4)
+    value = models.DecimalField(max_digits=10, decimal_places=4)
 
     variation = models.ForeignKey(Variation, related_name='listings')
 
-    @property
-    def value(self):
-        # You lose precision if you allow python to do the math
-        # saving to string is a good way to preserve it for the json
-        # serialization of anything but an int
-        return str(self.quantity * self.price)
+    def save(self, *args, **kwargs):
+        self.value = self.quantity * self.price
+        super(ListingItem, self).save(*args, **kwargs)
 
     @property
     def name(self):

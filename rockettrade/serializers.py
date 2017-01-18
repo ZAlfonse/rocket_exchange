@@ -24,7 +24,7 @@ class ListingItemSerializer(serializers.ModelSerializer):
 class ListingSerializer(serializers.ModelSerializer):
     seller = UserSerializer()
     buyer = UserSerializer()
-    listing_item = ListingItemSerializer()
+    listing_items = ListingItemSerializer(many=True)
 
     status = serializers.SerializerMethodField()
 
@@ -32,7 +32,7 @@ class ListingSerializer(serializers.ModelSerializer):
         model = Listing
         fields = (
             'status', 'created', 'edited',
-            'closed', 'listing_item', 'seller', 'buyer'
+            'closed', 'listing_items', 'seller', 'buyer'
         )
 
     def get_status(self, obj):
