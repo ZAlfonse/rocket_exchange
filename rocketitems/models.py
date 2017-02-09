@@ -52,6 +52,10 @@ class Item(models.Model):
     xbox_only = models.BooleanField(default=False)
     psn_only = models.BooleanField(default=False)
 
+    @property
+    def image_url(self):
+        return 'http://lorempixel.com/100/100/abstract/{}/'.format(self.name)
+
     class Meta:
         unique_together = ('name', 'type',)
 

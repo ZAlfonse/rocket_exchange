@@ -1,4 +1,4 @@
-from .models import Listing, ListingItem, User
+from .models import Listing, Offer, User
 from rocketitems.serializers import VariationSerializer
 from rest_framework import serializers
 
@@ -11,28 +11,29 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
-class ListingItemSerializer(serializers.ModelSerializer):
-    variation = VariationSerializer()
+class OfferSerializer(serializers.ModelSerializer):
+    bidder = UserSerializer()
+    items = VariationSerializer(many=True)
 
     class Meta:
-        model = ListingItem
+        model = Offer
         fields = (
-            'name', 'quantity', 'price', 'value', 'variation'
+            'created', 'edited', 'items', 'seller', 'bidder'
         )
 
 
 class ListingSerializer(serializers.ModelSerializer):
     seller = UserSerializer()
     buyer = UserSerializer()
-    listing_items = ListingItemSerializer(many=True)
-
     status = serializers.SerializerMethodField()
+
+    items = VariationSerializer(many=True)
 
     class Meta:
         model = Listing
         fields = (
             'status', 'created', 'edited',
-            'closed', 'listing_items', 'seller', 'buyer'
+            'closed', 'items', 'seller', 'buyer'
         )
 
     def get_status(self, obj):

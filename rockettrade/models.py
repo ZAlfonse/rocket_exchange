@@ -29,6 +29,8 @@ class Listing(models.Model):
         (INCOMPLETE, 'Incomplete')
     )
 
+    items = models.ManyToManyField(Variation)
+
     status = models.CharField(max_length=1, default=OPEN, choices=STATUS_CHOICES)
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='listings')
@@ -38,27 +40,12 @@ class Listing(models.Model):
     edited = models.DateTimeField(auto_now=True)
     closed = models.DateTimeField(null=True, blank=True)
 
-    @property
-    def value(self):
-        return self.listing_items.aggregate(models.Sum('value'))
 
+class Offer(models.Model):
+    listing = models.ForeignKey(Listing, related_name='offers')
+    bidder = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='offers')
 
-class ListingItem(models.Model):
-    listing = models.ForeignKey(Listing, related_name='listing_items')
+    items = models.ManyToManyField(Variation)
 
-    quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=9, decimal_places=4)
-    value = models.DecimalField(max_digits=10, decimal_places=4)
-
-    variation = models.ForeignKey(Variation, related_name='listings')
-
-    def save(self, *args, **kwargs):
-        self.value = self.quantity * self.price
-        super(ListingItem, self).save(*args, **kwargs)
-
-    @property
-    def name(self):
-        return str(self)
-
-    def __str__(self):
-        return str(self.variation)
+    created = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)

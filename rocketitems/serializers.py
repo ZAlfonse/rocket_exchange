@@ -27,7 +27,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'name', 'quality', 'type', 'pack', 'platform_restrictions')
+        fields = ('id', 'image_url', 'name', 'quality', 'type', 'pack', 'platform_restrictions')
 
 
 class AttributeSerializer(serializers.ModelSerializer):
